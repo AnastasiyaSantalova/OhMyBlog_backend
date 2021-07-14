@@ -11,9 +11,10 @@ const start = async () => {
     });
 
     routes.forEach(route => server.route(route));
+    
     await db.connect();
-
     await server.start();
+    
     console.log(`Server is listening on ${server.info.uri}`)
 }
 
@@ -25,8 +26,8 @@ process.on('unhandledRejection', err => {
 process.on('SIGINT', async () => {
     console.log('Stopping server...');
     await server.stop({ timeout: 10000 });
+
     db.end();
-    console.log('Server stoped');
     process.exit(0);
 })
 
